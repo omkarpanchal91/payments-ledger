@@ -1,0 +1,5 @@
+# Profile for running on your machine with `./gradlew bootRun --args='--spring.profiles.active=local'`.
+# Uses human-readable console logs instead of JSON.
+logging:
+  level:
+    com.omkar.ledger: DEBUG

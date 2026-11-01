@@ -1,0 +1,33 @@
+# Activated by @ActiveProfiles("test") in IntegrationTestBase.
+# Datasource and Kafka bootstrap servers are injected from Testcontainers at runtime.
+
+ledger:
+  security:
+    api-keys:
+      - key: sk_test_admin_key
+        client-id: test-admin
+        admin: true
+      - key: sk_test_merchant_key
+        client-id: test-merchant-app
+        admin: false
+  outbox:
+    relay-interval-ms: 100
+  webhooks:
+    request-timeout: 2s
+    # Short schedule so retry/DLQ tests finish in seconds: 4 attempts in total.
+    retry-schedule: 200ms,200ms,200ms
+    jitter-ratio: 0.0
+    retry-poll-interval-ms: 100
+    claim-lease: 30s
+
+spring:
+  datasource:
+    hikari:
+      maximum-pool-size: 30
+
+logging:
+  level:
+    root: WARN
+    com.omkar.ledger: INFO
+    org.apache.kafka: ERROR
+    org.springframework.kafka: WARN
